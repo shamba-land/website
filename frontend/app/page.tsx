@@ -62,6 +62,7 @@ export default function Home() {
                 }
                 title="Geospatial Mapping"
                 description="Visualize farmer locations, field boundaries, and agricultural data on interactive maps. Track progress across regions."
+                delay={0}
               />
 
               <FeatureCard
@@ -82,6 +83,7 @@ export default function Home() {
                 }
                 title="Farmer Relationship Management"
                 description="Manage detailed farmer profiles, track interactions, and maintain comprehensive records of all engagements."
+                delay={100}
               />
 
               <FeatureCard
@@ -102,6 +104,7 @@ export default function Home() {
                 }
                 title="Data Analytics"
                 description="Generate insights from your data with powerful analytics. Track yields, adoption rates, and impact metrics."
+                delay={200}
               />
 
               <FeatureCard
@@ -122,6 +125,7 @@ export default function Home() {
                 }
                 title="Mobile Data Collection"
                 description="Collect field data offline with our mobile app. Sync automatically when connectivity is available."
+                delay={300}
               />
 
               <FeatureCard
@@ -142,6 +146,7 @@ export default function Home() {
                 }
                 title="Secure & Compliant"
                 description="Enterprise-grade security with role-based access control. GDPR compliant data management."
+                delay={400}
               />
 
               <FeatureCard
@@ -162,6 +167,7 @@ export default function Home() {
                 }
                 title="Program Management"
                 description="Plan and track agricultural programs, training sessions, and interventions across your organization."
+                delay={500}
               />
             </div>
           </div>

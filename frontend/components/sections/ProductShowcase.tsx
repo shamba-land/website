@@ -1,4 +1,5 @@
 import { GeoDecorations } from "@/components/ui/GeoDecorations";
+import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function ProductShowcase() {
   return (
@@ -33,7 +34,7 @@ export function ProductShowcase() {
         <div className="mb-32">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             {/* Content */}
-            <div className="order-2 lg:order-1">
+            <ScrollReveal className="order-2 lg:order-1">
               <div className="mb-4 inline-flex items-center rounded-full border border-blue-light/40 px-3 py-1.5">
                 <span className="text-xs font-semibold text-blue-light uppercase tracking-wider">Web Platform</span>
               </div>
@@ -82,10 +83,10 @@ export function ProductShowcase() {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Screenshot Placeholder */}
-            <div className="order-1 lg:order-2">
+            <ScrollReveal delay={200} className="order-1 lg:order-2">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl blur-2xl group-hover:blur-3xl transition-all" />
                 <div className="relative bg-card border-2 border-border rounded-xl overflow-hidden shadow-hard-lg hover:shadow-hard hover:translate-x-1 hover:translate-y-1 transition-all">
@@ -111,7 +112,7 @@ export function ProductShowcase() {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
 
@@ -119,7 +120,7 @@ export function ProductShowcase() {
         <div>
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             {/* Screenshot Placeholder */}
-            <div className="relative">
+            <ScrollReveal>
               <div className="max-w-sm mx-auto lg:ml-auto lg:mr-0">
                 <div className="relative group">
                   <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all" />
@@ -144,10 +145,10 @@ export function ProductShowcase() {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Content */}
-            <div>
+            <ScrollReveal delay={200}>
               <div className="mb-4 inline-flex items-center rounded-full border border-blue-light/40 px-3 py-1.5">
                 <span className="text-xs font-semibold text-blue-light uppercase tracking-wider">Mobile App</span>
               </div>
@@ -208,7 +209,7 @@ export function ProductShowcase() {
                   </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </div>
