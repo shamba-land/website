@@ -51,7 +51,7 @@ export function Header() {
               alt="Shamba.land"
               width={111}
               height={32}
-              className="h-6 w-auto transition-opacity duration-300"
+              className="h-8 w-auto transition-opacity duration-300"
               priority
             />
           </Link>
