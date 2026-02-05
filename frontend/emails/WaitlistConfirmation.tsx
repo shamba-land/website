@@ -40,7 +40,7 @@ export function WaitlistConfirmation({ email }: WaitlistConfirmationProps) {
           }}
         >
           <Img
-            src="https://shamba.land/logo.svg"
+            src="https://shamba.land/logo.png"
             width="120"
             alt="Shamba.land"
             style={{ marginBottom: "32px" }}
