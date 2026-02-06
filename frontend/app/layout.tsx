@@ -48,6 +48,25 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Shamba",
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
+  description: "Geospatial CRM platform for organizations supporting smallholder farmers with mapping, mobile data collection, and agricultural program management tools.",
+  url: "https://shamba.land",
+  author: {
+    "@type": "Organization",
+    name: "Shamba.land",
+    url: "https://shamba.land",
+  },
+  offers: {
+    "@type": "Offer",
+    availability: "https://schema.org/ComingSoon",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,6 +74,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${geistMono.variable} antialiased`}
       >
