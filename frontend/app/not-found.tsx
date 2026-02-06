@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Footer } from "@/components/layout/Footer";
+import { GeoDecorations } from "@/components/ui/GeoDecorations";
 
 export default function NotFound() {
   return (
@@ -33,6 +34,9 @@ export default function NotFound() {
         {/* Decorative blur elements */}
         <div className="absolute top-20 right-10 w-72 h-72 bg-accent/8 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-10 w-72 h-72 bg-primary/8 rounded-full blur-3xl" />
+
+        {/* Geo coordinate decorations */}
+        <GeoDecorations />
 
         <div className="container relative flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
           {/* 404 Number */}
@@ -74,22 +78,6 @@ export default function NotFound() {
                 Contact Support
               </Link>
             </Button>
-          </div>
-
-          {/* Quick Links */}
-          <div className="mt-12 pt-8 border-t border-border/50">
-            <p className="text-sm text-muted-foreground mb-4">Or explore these sections:</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/#products" className="text-sm text-primary hover:underline">
-                Products
-              </Link>
-              <Link href="/#platform" className="text-sm text-primary hover:underline">
-                Platform
-              </Link>
-              <Link href="/#features" className="text-sm text-primary hover:underline">
-                Features
-              </Link>
-            </div>
           </div>
         </div>
       </main>
