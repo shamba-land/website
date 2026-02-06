@@ -1,4 +1,3 @@
-import { GeoDecorations } from "@/components/ui/GeoDecorations";
 import { ScrollReveal } from "@/components/ui/ScrollReveal";
 
 export function ProductShowcase() {
@@ -12,9 +11,6 @@ export function ProductShowcase() {
 
       {/* Smooth gradient transition to next section */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background" />
-
-      {/* Geospatial decorations */}
-      <GeoDecorations />
 
       <div className="container relative">
         <div className="mx-auto max-w-3xl text-center mb-20">

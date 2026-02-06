@@ -5,6 +5,7 @@ import { Products } from "@/components/sections/Products";
 import { ProductShowcase } from "@/components/sections/ProductShowcase";
 import { FeatureCard } from "@/components/sections/FeatureCard";
 import { WaitlistForm } from "@/components/sections/WaitlistForm";
+import { GeoDecorations } from "@/components/ui/GeoDecorations";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -29,6 +30,9 @@ export default function Home() {
           {/* Smooth gradient transitions */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-background" />
+
+          {/* Geospatial decorations */}
+          <GeoDecorations />
 
           <div className="container relative">
             <div className="mx-auto max-w-3xl text-center mb-16">
