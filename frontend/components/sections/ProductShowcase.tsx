@@ -122,25 +122,25 @@ function MapVisualization({ isActive }: { isActive: boolean }) {
         <circle cx="175" cy="120" r="2.5" fill="#1F3D2B" />
       </svg>
 
-      {/* Layer toggle panel */}
-      <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-2.5 space-y-2">
-        <div className="text-[9px] font-semibold text-foreground mb-2">Map Layers</div>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" defaultChecked className="w-3 h-3 rounded accent-primary" />
+      {/* Layer legend panel - non-interactive */}
+      <div className="absolute top-3 right-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-2.5 space-y-1.5 pointer-events-none">
+        <div className="text-[9px] font-semibold text-foreground mb-1.5">Map Layers</div>
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-sm bg-primary" />
           <span className="text-[9px] text-foreground">Farm Boundaries</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" defaultChecked className="w-3 h-3 rounded accent-[#C0392B]" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-sm bg-[#C0392B]" />
           <span className="text-[9px] text-foreground">Deforestation Risk</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" className="w-3 h-3 rounded accent-blue-light" />
+        </div>
+        <div className="hidden md:flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-sm bg-blue-light" />
           <span className="text-[9px] text-foreground">Water Sources</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" className="w-3 h-3 rounded accent-[#E1B75A]" />
+        </div>
+        <div className="hidden md:flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-sm bg-[#E1B75A]" />
           <span className="text-[9px] text-foreground">Soil Quality</span>
-        </label>
+        </div>
       </div>
 
       {/* Zoom controls */}
@@ -175,58 +175,59 @@ function AnalyticsVisualization({ isActive }: { isActive: boolean }) {
     { value: 95, label: "Dec" },
   ];
 
-  // Generate SVG path for line chart
+  // Generate SVG path for line chart with padding
   const maxValue = 100;
+  const padding = 10;
   const chartWidth = 260;
-  const chartHeight = 60;
-  const stepX = chartWidth / (chartData.length - 1);
+  const chartHeight = 50;
+  const stepX = (chartWidth - padding * 2) / (chartData.length - 1);
 
   const linePath = chartData
     .map((point, i) => {
-      const x = i * stepX;
-      const y = chartHeight - (point.value / maxValue) * chartHeight;
+      const x = padding + i * stepX;
+      const y = chartHeight - (point.value / maxValue) * (chartHeight - 6);
       return `${i === 0 ? "M" : "L"} ${x} ${y}`;
     })
     .join(" ");
 
-  const areaPath = `${linePath} L ${chartWidth} ${chartHeight} L 0 ${chartHeight} Z`;
+  const areaPath = `${linePath} L ${padding + (chartData.length - 1) * stepX} ${chartHeight} L ${padding} ${chartHeight} Z`;
 
   return (
     <div className={`absolute inset-0 transition-all duration-500 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
       <div className="absolute inset-0 bg-muted/20" />
 
-      <div className="p-4 h-full flex flex-col gap-3">
-        {/* Top stats row - consistent card styling */}
-        <div className="flex gap-3">
-          <div className="flex-1 bg-white rounded-lg p-3 shadow-sm border border-border">
-            <div className="text-[10px] text-muted-foreground mb-1">Total Farmers</div>
-            <div className="text-2xl font-bold text-primary">2,847</div>
-            <div className="text-[9px] text-primary flex items-center gap-1 mt-1">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="p-2 md:p-4 h-full flex flex-col gap-2 md:gap-3">
+        {/* Top stats row - responsive layout */}
+        <div className="flex gap-2 md:gap-3">
+          <div className="flex-1 bg-white rounded-lg p-2 md:p-3 shadow-sm border border-border">
+            <div className="text-[8px] md:text-[10px] text-muted-foreground mb-0.5 md:mb-1">Total Farmers</div>
+            <div className="text-lg md:text-2xl font-bold text-primary">2,847</div>
+            <div className="text-[7px] md:text-[9px] text-primary flex items-center gap-1 mt-0.5 md:mt-1">
+              <svg className="w-2.5 h-2.5 md:w-3 md:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
-              +12% this month
+              +12%
             </div>
           </div>
-          <div className="flex-1 bg-white rounded-lg p-3 shadow-sm border border-border">
-            <div className="text-[10px] text-muted-foreground mb-1">Active Programs</div>
-            <div className="text-2xl font-bold text-secondary">24</div>
-            <div className="text-[9px] text-secondary">Across 5 regions</div>
+          <div className="flex-1 bg-white rounded-lg p-2 md:p-3 shadow-sm border border-border">
+            <div className="text-[8px] md:text-[10px] text-muted-foreground mb-0.5 md:mb-1">Programs</div>
+            <div className="text-lg md:text-2xl font-bold text-secondary">24</div>
+            <div className="text-[7px] md:text-[9px] text-secondary mt-0.5 md:mt-1">5 regions</div>
           </div>
-          <div className="flex-1 bg-white rounded-lg p-3 shadow-sm border border-border">
-            <div className="text-[10px] text-muted-foreground mb-1">Total Area</div>
-            <div className="text-2xl font-bold text-blue">4,521 ha</div>
-            <div className="text-[9px] text-blue">+340 ha new</div>
+          <div className="flex-1 bg-white rounded-lg p-2 md:p-3 shadow-sm border border-border">
+            <div className="text-[8px] md:text-[10px] text-muted-foreground mb-0.5 md:mb-1">Area</div>
+            <div className="text-lg md:text-2xl font-bold text-blue">4,521 ha</div>
+            <div className="text-[7px] md:text-[9px] text-blue mt-0.5 md:mt-1">+340 ha</div>
           </div>
         </div>
 
         {/* Chart area - LINE chart */}
-        <div className="flex-1 bg-white rounded-lg p-3 shadow-sm border border-border flex flex-col">
-          <div className="flex justify-between items-center mb-2">
-            <div className="text-[10px] font-semibold text-foreground">Farmer Registration Trend</div>
-            <div className="flex gap-2 text-[8px]">
-              <span className="px-2 py-0.5 rounded bg-primary/10 text-primary">Monthly</span>
-              <span className="px-2 py-0.5 rounded text-muted-foreground">Weekly</span>
+        <div className="flex-1 bg-white rounded-lg p-2 md:p-3 shadow-sm border border-border flex flex-col">
+          <div className="flex justify-between items-center mb-1 md:mb-2">
+            <div className="text-[8px] md:text-[10px] font-semibold text-foreground">Registration Trend</div>
+            <div className="flex gap-1 md:gap-2 text-[7px] md:text-[8px]">
+              <span className="px-1.5 md:px-2 py-0.5 rounded bg-primary/10 text-primary">Monthly</span>
+              <span className="hidden md:inline px-2 py-0.5 rounded text-muted-foreground">Weekly</span>
             </div>
           </div>
           {/* Line chart using SVG */}
@@ -241,13 +242,13 @@ function AnalyticsVisualization({ isActive }: { isActive: boolean }) {
               <path d={areaPath} fill="url(#lineGradient)" />
 
               {/* Line */}
-              <path d={linePath} fill="none" stroke="#1F3D2B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d={linePath} fill="none" stroke="#1F3D2B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 
               {/* Data points */}
               {chartData.map((point, i) => {
-                const x = i * stepX;
-                const y = chartHeight - (point.value / maxValue) * chartHeight;
-                return <circle key={i} cx={x} cy={y} r="2.5" fill="#1F3D2B" />;
+                const x = padding + i * stepX;
+                const y = chartHeight - (point.value / maxValue) * (chartHeight - 6);
+                return <circle key={i} cx={x} cy={y} r="2" fill="#1F3D2B" />;
               })}
 
               {/* Gradient definition */}
@@ -260,35 +261,35 @@ function AnalyticsVisualization({ isActive }: { isActive: boolean }) {
             </svg>
           </div>
           {/* X-axis labels - at bottom of card */}
-          <div className="flex justify-between text-[7px] text-muted-foreground mt-1 px-0.5">
+          <div className="flex justify-between text-[5px] md:text-[7px] text-muted-foreground mt-1 px-2 md:px-2.5">
             {chartData.map((point, i) => (
               <span key={i}>{point.label}</span>
             ))}
           </div>
         </div>
 
-        {/* Bottom metrics - consistent card styling */}
-        <div className="flex gap-3">
-          <div className="flex-1 bg-white rounded-lg p-2 shadow-sm border border-border flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center">
-              <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {/* Bottom metrics - responsive */}
+        <div className="flex gap-2 md:gap-3">
+          <div className="flex-1 bg-white rounded-lg p-1.5 md:p-2 shadow-sm border border-border flex items-center gap-1.5 md:gap-2">
+            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-accent/20 flex items-center justify-center shrink-0">
+              <svg className="w-3 h-3 md:w-4 md:h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
-            <div>
-              <div className="text-[9px] text-muted-foreground">Surveys Done</div>
-              <div className="text-sm font-bold text-foreground">1,234</div>
+            <div className="min-w-0">
+              <div className="text-[7px] md:text-[9px] text-muted-foreground truncate">Surveys</div>
+              <div className="text-xs md:text-sm font-bold text-foreground">1,234</div>
             </div>
           </div>
-          <div className="flex-1 bg-white rounded-lg p-2 shadow-sm border border-border flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-blue-light/20 flex items-center justify-center">
-              <svg className="w-4 h-4 text-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="flex-1 bg-white rounded-lg p-1.5 md:p-2 shadow-sm border border-border flex items-center gap-1.5 md:gap-2">
+            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-blue-light/20 flex items-center justify-center shrink-0">
+              <svg className="w-3 h-3 md:w-4 md:h-4 text-blue-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <div>
-              <div className="text-[9px] text-muted-foreground">Revenue Impact</div>
-              <div className="text-sm font-bold text-foreground">$2.4M</div>
+            <div className="min-w-0">
+              <div className="text-[7px] md:text-[9px] text-muted-foreground truncate">Revenue</div>
+              <div className="text-xs md:text-sm font-bold text-foreground">$2.4M</div>
             </div>
           </div>
         </div>
@@ -302,9 +303,9 @@ function CollaborationVisualization({ isActive }: { isActive: boolean }) {
     <div className={`absolute inset-0 transition-all duration-500 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
       <div className="absolute inset-0 bg-gradient-to-br from-muted/20 via-background to-muted/30" />
 
-      <div className="p-4 h-full flex gap-3">
-        {/* Team sidebar */}
-        <div className="w-48 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-border overflow-hidden flex flex-col">
+      <div className="p-2 md:p-4 h-full flex gap-2 md:gap-3">
+        {/* Team sidebar - hidden on mobile */}
+        <div className="hidden md:flex w-48 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-border overflow-hidden flex-col">
           <div className="p-2 border-b border-border bg-muted/30">
             <div className="text-[10px] font-semibold text-foreground">Team Members</div>
             <div className="text-[9px] text-muted-foreground">5 online now</div>
@@ -336,79 +337,90 @@ function CollaborationVisualization({ isActive }: { isActive: boolean }) {
         </div>
 
         {/* Main content area */}
-        <div className="flex-1 flex flex-col gap-3">
+        <div className="flex-1 flex flex-col gap-2 md:gap-3">
           {/* Task board header */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-border p-2 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="text-[10px] font-semibold text-foreground">Task Board</div>
-              <div className="px-2 py-0.5 rounded-full text-[8px] font-medium text-white bg-blue-light">
+          <div className="bg-white/90 backdrop-blur-sm rounded-lg shadow-sm border border-border p-1.5 md:p-2 flex items-center justify-between">
+            <div className="flex items-center gap-1.5 md:gap-2">
+              <div className="text-[8px] md:text-[10px] font-semibold text-foreground">Task Board</div>
+              <div className="px-1.5 md:px-2 py-0.5 rounded-full text-[7px] md:text-[8px] font-medium text-white bg-blue-light">
                 12 active
               </div>
             </div>
-            <button className="px-2 py-1 rounded text-[9px] bg-primary text-white">+ Add Task</button>
+            <div className="flex items-center gap-2">
+              {/* Team avatars on mobile */}
+              <div className="flex md:hidden -space-x-1.5">
+                {["#1F3D2B", "#2C5F7F", "#C46A3A"].map((color, i) => (
+                  <div key={i} className="w-5 h-5 rounded-full border border-white flex items-center justify-center text-white text-[6px] font-bold" style={{ backgroundColor: color }}>
+                    {["SK", "JM", "AN"][i]}
+                  </div>
+                ))}
+                <div className="w-5 h-5 rounded-full border border-white bg-muted flex items-center justify-center text-[6px] text-muted-foreground">+2</div>
+              </div>
+              <button className="px-1.5 md:px-2 py-0.5 md:py-1 rounded text-[7px] md:text-[9px] bg-primary text-white">+ Add</button>
+            </div>
           </div>
 
           {/* Task columns */}
-          <div className="flex-1 flex gap-2">
+          <div className="flex-1 flex gap-1.5 md:gap-2">
             {/* To Do column */}
-            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-lg border border-border p-2">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-amber-400" />
-                <span className="text-[9px] font-semibold text-foreground">To Do</span>
-                <span className="text-[8px] text-muted-foreground">(4)</span>
+            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-lg border border-border p-1.5 md:p-2">
+              <div className="flex items-center gap-1 md:gap-2 mb-1.5 md:mb-2">
+                <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-400" />
+                <span className="text-[7px] md:text-[9px] font-semibold text-foreground">To Do</span>
+                <span className="text-[6px] md:text-[8px] text-muted-foreground">(4)</span>
               </div>
-              <div className="space-y-1.5">
-                <div className="bg-white rounded p-1.5 shadow-sm border-l-2 border-amber-400">
-                  <div className="text-[9px] font-medium">Survey Region B</div>
-                  <div className="text-[8px] text-muted-foreground">Due tomorrow</div>
+              <div className="space-y-1 md:space-y-1.5">
+                <div className="bg-white rounded p-1 md:p-1.5 shadow-sm border-l-2 border-amber-400">
+                  <div className="text-[7px] md:text-[9px] font-medium">Survey Region B</div>
+                  <div className="text-[6px] md:text-[8px] text-muted-foreground">Due tomorrow</div>
                 </div>
-                <div className="bg-white rounded p-1.5 shadow-sm border-l-2 border-amber-400">
-                  <div className="text-[9px] font-medium">Verify boundaries</div>
-                  <div className="text-[8px] text-muted-foreground">15 farms</div>
+                <div className="bg-white rounded p-1 md:p-1.5 shadow-sm border-l-2 border-amber-400">
+                  <div className="text-[7px] md:text-[9px] font-medium">Verify boundaries</div>
+                  <div className="text-[6px] md:text-[8px] text-muted-foreground">15 farms</div>
                 </div>
               </div>
             </div>
 
             {/* In Progress column */}
-            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-lg border border-border p-2">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-blue-light" />
-                <span className="text-[9px] font-semibold text-foreground">In Progress</span>
-                <span className="text-[8px] text-muted-foreground">(3)</span>
+            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-lg border border-border p-1.5 md:p-2">
+              <div className="flex items-center gap-1 md:gap-2 mb-1.5 md:mb-2">
+                <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-light" />
+                <span className="text-[7px] md:text-[9px] font-semibold text-foreground">Active</span>
+                <span className="text-[6px] md:text-[8px] text-muted-foreground">(3)</span>
               </div>
-              <div className="space-y-1.5">
-                <div className="bg-white rounded p-1.5 shadow-sm border-l-2 border-blue-light">
-                  <div className="text-[9px] font-medium">Data collection</div>
-                  <div className="flex items-center gap-1 mt-1">
-                    <div className="w-4 h-4 rounded-full text-white text-[7px] font-bold flex items-center justify-center bg-blue">JM</div>
-                    <div className="text-[8px] text-muted-foreground">James M.</div>
+              <div className="space-y-1 md:space-y-1.5">
+                <div className="bg-white rounded p-1 md:p-1.5 shadow-sm border-l-2 border-blue-light">
+                  <div className="text-[7px] md:text-[9px] font-medium">Data collection</div>
+                  <div className="flex items-center gap-1 mt-0.5 md:mt-1">
+                    <div className="w-3 h-3 md:w-4 md:h-4 rounded-full text-white text-[5px] md:text-[7px] font-bold flex items-center justify-center bg-blue">JM</div>
+                    <div className="hidden md:block text-[8px] text-muted-foreground">James M.</div>
                   </div>
                 </div>
-                <div className="bg-white rounded p-1.5 shadow-sm border-l-2 border-blue-light">
-                  <div className="text-[9px] font-medium">Quality review</div>
-                  <div className="flex items-center gap-1 mt-1">
-                    <div className="w-4 h-4 rounded-full text-white text-[7px] font-bold flex items-center justify-center" style={{ backgroundColor: "#7A5C3E" }}>GW</div>
-                    <div className="text-[8px] text-muted-foreground">Grace W.</div>
+                <div className="bg-white rounded p-1 md:p-1.5 shadow-sm border-l-2 border-blue-light">
+                  <div className="text-[7px] md:text-[9px] font-medium">Quality review</div>
+                  <div className="flex items-center gap-1 mt-0.5 md:mt-1">
+                    <div className="w-3 h-3 md:w-4 md:h-4 rounded-full text-white text-[5px] md:text-[7px] font-bold flex items-center justify-center" style={{ backgroundColor: "#7A5C3E" }}>GW</div>
+                    <div className="hidden md:block text-[8px] text-muted-foreground">Grace W.</div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Done column */}
-            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-lg border border-border p-2">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-primary" />
-                <span className="text-[9px] font-semibold text-foreground">Done</span>
-                <span className="text-[8px] text-muted-foreground">(5)</span>
+            <div className="flex-1 bg-white/70 backdrop-blur-sm rounded-lg border border-border p-1.5 md:p-2">
+              <div className="flex items-center gap-1 md:gap-2 mb-1.5 md:mb-2">
+                <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-primary" />
+                <span className="text-[7px] md:text-[9px] font-semibold text-foreground">Done</span>
+                <span className="text-[6px] md:text-[8px] text-muted-foreground">(5)</span>
               </div>
-              <div className="space-y-1.5">
-                <div className="bg-white rounded p-1.5 shadow-sm border-l-2 border-primary opacity-70">
-                  <div className="text-[9px] font-medium line-through">Region A complete</div>
-                  <div className="text-[8px] text-muted-foreground">847 farmers</div>
+              <div className="space-y-1 md:space-y-1.5">
+                <div className="bg-white rounded p-1 md:p-1.5 shadow-sm border-l-2 border-primary opacity-70">
+                  <div className="text-[7px] md:text-[9px] font-medium line-through">Region A</div>
+                  <div className="text-[6px] md:text-[8px] text-muted-foreground">847 farmers</div>
                 </div>
-                <div className="bg-white rounded p-1.5 shadow-sm border-l-2 border-primary opacity-70">
-                  <div className="text-[9px] font-medium line-through">GPS mapping</div>
-                  <div className="text-[8px] text-muted-foreground">Completed</div>
+                <div className="bg-white rounded p-1 md:p-1.5 shadow-sm border-l-2 border-primary opacity-70">
+                  <div className="text-[7px] md:text-[9px] font-medium line-through">GPS mapping</div>
+                  <div className="text-[6px] md:text-[8px] text-muted-foreground">Completed</div>
                 </div>
               </div>
             </div>
@@ -424,6 +436,17 @@ function OfflineVisualization({ isActive }: { isActive: boolean }) {
   return (
     <div className={`absolute inset-0 transition-all duration-500 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
       <div className="absolute inset-0 bg-muted/40" />
+
+      {/* Subtle terrain texture */}
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="offlineTerrain" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="5" cy="5" r="0.5" className="fill-primary/40" />
+            <circle cx="15" cy="12" r="0.3" className="fill-accent/40" />
+          </pattern>
+        </defs>
+        <rect width="100" height="200" fill="url(#offlineTerrain)" />
+      </svg>
 
       {/* Status bar */}
       <div className="absolute top-8 left-4 right-4 flex justify-between items-center">
@@ -693,56 +716,50 @@ function DeviceVisualization({ isActive }: { isActive: boolean }) {
     <div className={`absolute inset-0 transition-all duration-500 ${isActive ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"}`}>
       <div className="absolute inset-0 bg-muted/30" />
 
+      {/* Subtle terrain texture */}
+      <svg className="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 100 200" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="deviceTerrain" width="20" height="20" patternUnits="userSpaceOnUse">
+            <circle cx="5" cy="5" r="0.5" className="fill-primary/40" />
+            <circle cx="15" cy="12" r="0.3" className="fill-accent/40" />
+          </pattern>
+        </defs>
+        <rect width="100" height="200" fill="url(#deviceTerrain)" />
+      </svg>
+
       {/* Status bar */}
       <div className="absolute top-8 left-4 right-4 flex justify-between items-center">
         <div className="text-[10px] font-medium text-foreground/70">9:41</div>
       </div>
 
-      {/* Simplified device view */}
+      {/* App store buttons view */}
       <div className="absolute inset-x-4 top-1/2 -translate-y-1/2">
         <div className="bg-white rounded-xl p-4 shadow-lg">
-          <div className="text-sm font-semibold text-foreground text-center mb-4">Works on Any Device</div>
+          <div className="text-sm font-semibold text-foreground text-center mb-2">Available Soon</div>
+          <div className="text-[10px] text-muted-foreground text-center mb-4">Native apps for iOS and Android</div>
 
-          {/* Platform icons */}
-          <div className="flex justify-center gap-6 mb-4">
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-2">
-                <svg className="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-                </svg>
+          {/* Store buttons - subtle/coming soon style */}
+          <div className="space-y-2">
+            {/* App Store button */}
+            <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-border/60 bg-muted/30 opacity-70">
+              <svg className="w-7 h-7 text-foreground/70" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+              </svg>
+              <div>
+                <div className="text-[8px] text-muted-foreground leading-none">Coming soon on</div>
+                <div className="text-[11px] font-semibold text-foreground/80">App Store</div>
               </div>
-              <div className="text-[10px] font-medium text-foreground">iOS</div>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-2">
-                <svg className="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="currentColor">
-                  {/* Android Robot - proper logo */}
-                  <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.97 3.26 6 5.01 6 7h12c0-1.99-.97-3.75-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z" />
-                </svg>
-              </div>
-              <div className="text-[10px] font-medium text-foreground">Android</div>
-            </div>
-          </div>
 
-          {/* Features */}
-          <div className="space-y-2 pt-3 border-t border-border">
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            {/* Play Store button */}
+            <div className="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-border/60 bg-muted/30 opacity-70">
+              <svg className="w-7 h-7 text-foreground/70" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.198l2.807 1.626a1 1 0 0 1 0 1.73l-2.808 1.626L15.206 12l2.492-2.491zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z" />
               </svg>
-              <span className="text-[10px] text-foreground">Native performance</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-[10px] text-foreground">Camera & GPS integration</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-[10px] text-foreground">Background sync</span>
+              <div>
+                <div className="text-[8px] text-muted-foreground leading-none">Coming soon on</div>
+                <div className="text-[11px] font-semibold text-foreground/80">Google Play</div>
+              </div>
             </div>
           </div>
         </div>
