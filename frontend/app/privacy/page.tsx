@@ -22,7 +22,7 @@ export default function PrivacyPage() {
                 Privacy Policy
               </h1>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                Last updated: July 16, 2026
+                Last updated: August 9, 2026
               </p>
             </div>
 
@@ -134,9 +134,10 @@ export default function PrivacyPage() {
                   </li>
                   <li>
                     <strong>Farmer and participant data (Customer Data):</strong>{" "}
-                    names and contact details, household or membership details,
-                    identifiers assigned by the Customer, and, where the Customer
-                    records them, references to identity documents.
+                    names and contact details, date of birth, gender, household or
+                    membership details, identifiers assigned by the Customer,
+                    references to identity documents, and optional bank or
+                    mobile-payment details where configured by the Customer.
                   </li>
                   <li>
                     <strong>Geospatial and farm data (Customer Data):</strong> plot
@@ -146,7 +147,8 @@ export default function PrivacyPage() {
                   <li>
                     <strong>Field-collected data (Customer Data):</strong> survey
                     responses, training records, input distributions, purchases,
-                    photos, and notes captured by field teams, including offline.
+                    photos, audio recordings, uploaded documents, and notes
+                    captured by field teams, including offline.
                   </li>
                   <li>
                     <strong>Communications:</strong> messages, feedback, and support
@@ -158,11 +160,14 @@ export default function PrivacyPage() {
                   </li>
                   <li>
                     <strong>Usage and log data:</strong> actions taken in the
-                    Services, timestamps, and security and audit logs.
+                    Services, timestamps, crash reports, performance and diagnostic
+                    data, and security and audit logs.
                   </li>
                   <li>
                     <strong>Location data:</strong> device location when a user
-                    actively uses location features such as mapping a plot.
+                    actively uses location features such as mapping a plot,
+                    answering a GPS survey question, or attaching location evidence
+                    to a task or field record.
                   </li>
                   <li>
                     <strong>Cookies and similar identifiers:</strong> see Section 14.
@@ -229,9 +234,9 @@ export default function PrivacyPage() {
                         <td>Controller</td>
                       </tr>
                       <tr>
-                        <td>Operating and improving the Services using aggregated statistics and service telemetry</td>
-                        <td>Aggregated and non-identifying technical data</td>
-                        <td>Legitimate interests; identifiable Customer Data is not used for this without instruction</td>
+                        <td>Operating and improving the Services using service telemetry</td>
+                        <td>Technical diagnostics, performance data, and internal identifiers needed to investigate an incident</td>
+                        <td>Legitimate interests; identifiable Customer Data is not used for product analytics without instruction</td>
                         <td>Controller / Processor</td>
                       </tr>
                       <tr>
