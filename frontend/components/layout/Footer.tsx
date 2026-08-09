@@ -100,6 +100,12 @@ export function Footer() {
             <Link href="/privacy" className="text-white/70 transition-colors hover:text-white">
               Privacy
             </Link>
+            <Link
+              href="/delete-account"
+              className="text-white/70 transition-colors hover:text-white"
+            >
+              Delete account
+            </Link>
             <Link href="/terms" className="text-white/70 transition-colors hover:text-white">
               Terms
             </Link>
